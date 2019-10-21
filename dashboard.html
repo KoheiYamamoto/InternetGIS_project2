@@ -1,29 +1,86 @@
-<html><head>
+<html>
+<head>
 <title>HTML TAG list</title>
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"
     integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
     crossorigin="anonymous"></script>
+<style>
+body {
+  font-family: Arial;
+  padding: 10px;
+  background-color: #f5f5f5;
+  color: #808080;
+  	text-align: center;
+}
+
+/* .col_half { width: 49%; }
+.col_third { width: 32%; } */
+.col_fourth { width: 23.5%; }
+/* .col_fifth { width: 18.4%; }
+.col_sixth { width: 15%; }
+.col_three_fourth { width: 74.5%;}
+.col_twothird{ width: 66%;}
+.col_half,
+.col_third,
+.col_twothird, */
+.col_fourth,
+/* .col_three_fourth, */
+.col_fifth{
+	position: relative;
+	display:inline;
+	display: inline-block;
+	float: left;
+	margin-right: 2%;
+	margin-bottom: 20px;
+}
+.end { margin-right: 0 !important; }
+/* Column Grids End */
+
+.wrapper { width: 980px; margin: 30px auto; position: relative;}
+.counter { background-color: #ffffff; padding: 20px 0; border-radius: 5px;}
+.count-title { font-size: 40px; font-weight: normal;  margin-top: 10px; margin-bottom: 0; text-align: center; }
+.count-text { font-size: 13px; font-weight: normal;  margin-top: 10px; margin-bottom: 0; text-align: center; }
+.fa-2x { margin: 0 auto; float: none; display: table; color: #4ad1e5; }
+
+</style>
 </head>
 <body>
-	<div id="time"></div>
-	<div id="no_taxi"></div>
+
+  <div class="wrapper">
+      <div class="counter col_fourth">
+        <img class="fa-2x" src="taxi-cab.png" height="25"></img>
+        <h2 class="timer count-title count-number" id="taxi_num2"></h2>
+        <p class="count-text ">Taxis available</p>
+      </div>
+
+      <div class="counter col_fourth">
+        <img class="fa-2x" src="clock.png" height="25"></img>
+        <h2 class="timer count-title count-number" id="time2"></h2>
+        <p class="count-text ">Timestamp</p>
+      </div>
+  </div>
 </body>
 
-<script type="text/javascript"> 
+<script type="text/javascript">
 	var temp_dash = function(){
 		$.getJSON('https://api.data.gov.sg/v1/transport/taxi-availability',function(data){
-			var taxi_count = data["features"][0]["properties"]["taxi_count"]
+			var taxi_num = data["features"][0]["properties"]["taxi_count"]
 			var time = data["features"][0]["properties"]["timestamp"]
+      var date = time.split("T", 1);
+      var time2 =time.slice(11,19);
 
-			var recorded_time = document.getElementById("time");
-			recorded_time.innerHTML = time;
-			var no = document.getElementById("no_taxi");
-			no.innerHTML = taxi_count;
+			// var recorded_time = document.getElementById("time");
+			// recorded_time.innerHTML = time;
+
+      var no_2 = document.getElementById("taxi_num2");
+      no_2.innerHTML = taxi_num;
+      var timeShown = document.getElementById("time2");
+			timeShown.innerHTML = time2;
+      var dateShown = document.getElementById("date");
+			dateShown.innerHTML = date;
 	    })
 	}
-
     temp_dash()
     setInterval(temp_dash, 30000)
-
 </script>
 </html>

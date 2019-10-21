@@ -1,0 +1,29 @@
+<html><head>
+<title>HTML TAG list</title>
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"
+    integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
+    crossorigin="anonymous"></script>
+</head>
+<body>
+	<div id="time"></div>
+	<div id="no_taxi"></div>
+</body>
+
+<script type="text/javascript"> 
+	var temp_dash = function(){
+		$.getJSON('https://api.data.gov.sg/v1/transport/taxi-availability',function(data){
+			var taxi_count = data["features"][0]["properties"]["taxi_count"]
+			var time = data["features"][0]["properties"]["timestamp"]
+
+			var recorded_time = document.getElementById("time");
+			recorded_time.innerHTML = time;
+			var no = document.getElementById("no_taxi");
+			no.innerHTML = taxi_count;
+	    })
+	}
+
+    temp_dash()
+    setInterval(temp_dash, 30000)
+
+</script>
+</html>

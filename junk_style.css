@@ -210,14 +210,3 @@ form {
   height: 12px;
   vertical-align: middle;
 }
-
-#legend {
-  position: absolute; 
-  right: 25px; 
-  bottom: 25px; 
-  height: 150px;
-  width: 150px;
-  z-index: 999;
-  border-style: groove;
-  border-width: 5px;
-}
