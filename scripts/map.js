@@ -1,3 +1,4 @@
+
 $(window).on('load', function() {
   var documentSettings = {};
   var markerColors = [];
@@ -716,3 +717,4 @@ $(window).on('load', function() {
   }
 
 });
+
