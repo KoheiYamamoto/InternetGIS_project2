@@ -46,6 +46,7 @@
 
   <!-- Custom style sheet -->
   <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="scripts/leaflet-heat.js"></script>
 
 </head>
 
@@ -72,26 +73,56 @@
           console.log('the map does not have the layer')
       }
 
-      $.getJSON("https://api.data.gov.sg/v1/transport/taxi-availability", function(data) {  
+      $.getJSON("https://api.data.gov.sg/v1/transport/taxi-availability", function(data) {
         geoJsonLayer = L.geoJson(data, {
-          pointToLayer: function( feature, latlng) {
-            return L.circleMarker(latlng, {
-              radius: 2,
-              fillColor: 'white',
-              color: 'red',
-              weight: 2,
-              opacity: 1,
-              fillOpacity: 0.7
-            }).bindPopup(feature.properties.name + '<br>' + feature.properties.district_name); // replace last term with property data labels to display from GeoJSON file
-          }
-        // }).addTo(map); 
+          pointToLayer: function(feature, latlng) {
+             var smallIcon = new L.Icon({
+                  iconSize: [8, 8],
+                  // iconAnchor: [13, 27],
+                  // popupAnchor:  [1, -24],
+                  iconUrl: 'taxi2.png'
+               });
+               return L.marker(latlng, {icon: smallIcon}).bindPopup(feature.properties.name + '<br>' + feature.properties.district_name);
+           }
+        // }).addTo(map);
       })
       map.addLayer(geoJsonLayer);
 
-
+      map.on('zoomend', function() {
+           var zoomlevel = map.getZoom();
+               if (zoomlevel  <13){
+                   if (map.hasLayer(geoJsonLayer)) {
+                       map.removeLayer(geoJsonLayer);
+                   } else {
+                       console.log("no point layer active");
+                   }
+               }
+               if (zoomlevel >= 13){
+                   if (map.hasLayer(geoJsonLayer)){
+                       console.log("layer already added");
+                   } else {
+                       map.addLayer(geoJsonLayer);
+                   }
+               }
+           console.log("Current Zoom Level =" + zoomlevel)
+           });
         // controlLayers.addOverlay(geoJsonLayer, 'Public Schools (CT Open Data-Socrata)');
       });
-    }     
+    }
+
+    $.getJSON("https://api.data.gov.sg/v1/transport/taxi-availability", function(data) {
+            console.log(data); // this will show the info it in firebug console
+            var taxi2DArr = data["features"][0]["geometry"]["coordinates"];
+            for(var i in taxi2DArr) {
+              // swap lng/lat
+                var swap = taxi2DArr[i][1];
+                taxi2DArr[i][1] = taxi2DArr[i][0];
+                taxi2DArr[i][0] = swap;
+                // set opacity for all the points
+                taxi2DArr[i].push(0.5);
+            }
+            var heat = L.heatLayer(taxi2DArr, {radius: 35, blur: 20}).addTo(map);
+    });    
 
     temp()
     setInterval(temp, 30000)
@@ -106,6 +137,6 @@
   <script type="text/javascript" src="scripts/procsv.js"></script>
   <script type="text/javascript" src="scripts/map.js"></script>
   <script src="scripts/leaflet-heat.js"></script>
-  
+
 </body>
 </html>
