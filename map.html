@@ -57,6 +57,7 @@
   <p><img id="legend" src="legend.png" alt="legend"></p>
 
   <script type="text/javascript">
+    // map initialisation
     var map = L.map('map', {
       attributionControl: false,
       zoomControl: false,
@@ -66,6 +67,7 @@
     var geoJsonLayer;
     var temp = function() {
       // https://gis.stackexchange.com/questions/248252/haslayer-and-removelayer-methods-not-working-on-leaflet-map-as-expected/248274
+      // Error handling whether a layer is alrady set or not
       if(map.hasLayer(geoJsonLayer)){
             map.removeLayer(geoJsonLayer);
             console.log('the map have the layer')
@@ -73,6 +75,7 @@
           console.log('the map does not have the layer')
       }
 
+      // get cooridnates json data from LTA API
       $.getJSON("https://api.data.gov.sg/v1/transport/taxi-availability", function(data) {
         geoJsonLayer = L.geoJson(data, {
           pointToLayer: function(feature, latlng) {
@@ -86,8 +89,10 @@
            }
         // }).addTo(map);
       })
+      // add layer
       map.addLayer(geoJsonLayer);
 
+      // visuality adjustment 
       map.on('zoomend', function() {
            var zoomlevel = map.getZoom();
                if (zoomlevel  <13){
@@ -110,6 +115,7 @@
       });
     }
 
+    // heatmap overlay
     $.getJSON("https://api.data.gov.sg/v1/transport/taxi-availability", function(data) {
             console.log(data); // this will show the info it in firebug console
             var taxi2DArr = data["features"][0]["geometry"]["coordinates"];
@@ -125,12 +131,12 @@
     });    
 
     temp()
+    // recusrive self-call function every 30 seconds
     setInterval(temp, 30000)
-
   </script>
 
 
-  <script type="text/javascript" src="google-doc-url.js"></script>
+  <script type="text/javascript" src="scripts/google-doc-url.js"></script>
   <script type="text/javascript" src="scripts/constants.js"></script>
   <script type="text/javascript" src="scripts/palette.js"></script>
   <script type="text/javascript" src="scripts/polylabel.js"></script>

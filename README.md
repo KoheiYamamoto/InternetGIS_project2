@@ -1,12 +1,26 @@
-# leaflet-maps-with-google-sheets-schools
-Schools demo of leaflet-maps-with-google-sheets
 
-## demo map
-https://jackdougherty.github.io/leaflet-maps-with-google-sheets-schools/index.html
 
-## Google Spreadsheet
-https://docs.google.com/spreadsheets/d/1ognLYi6Xa2GfzLuTxI9vK_TJXwcpifd_aoRkuTBFMsE/edit#gid=716934358
+# Singapore Taxi Availability
+This webpage visualises available taxis in Singapore, updated every 30 seconds.
 
-## See original version and details at
+## System Architecture 
+Resource List
 
-https://github.com/jackdougherty/leaflet-maps-with-google-sheets/
+* data.gov.sg API
+* Leaflet
+* Google Sheets as DB
+* Jotform
+* HTML/JS/CSS
+* Public Cloud/Server 
+
+![image](./README_mat/Slide1.png)
+![image](./README_mat/Slide2.png)
+
+## Front Design
+* index.html
+	* map.html
+	* dashboard.html
+	* jotform 	
+
+## DEMO
+[https://youtu.be/VYvyflvORHE](https://youtu.be/VYvyflvORHE)

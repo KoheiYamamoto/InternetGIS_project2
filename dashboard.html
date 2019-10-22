@@ -1,9 +1,35 @@
 <html>
 <head>
-<title>HTML TAG list</title>
+<title>Dashboard</title>
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"
     integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
     crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"
+      integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
+      crossorigin="anonymous"></script>
+
+      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+      <script type="text/javascript">
+
+        // https://google,developers.appspot.com/chart/interactive/docs/spreadsheets#gid
+        google.load('visualization', '1', {packages: ['corechart', 'line']});
+        google.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+          // Add your sheets url and range below
+          var spreadsheetUrl = "https://docs.google.com/spreadsheets/d/1OM1JiYxX-sRu6Oy2_l370SXnBQYMINJKjnWzP9K6HFg/edit#gid=0&range=B1:B32";
+          var query = new google.visualization.Query(spreadsheetUrl);
+          query.send(handleQueryResponse);
+        }
+
+        function handleQueryResponse(response) {
+          var dataTable = response.getDataTable();
+          // https://developers.google.com/chart/interactive/docs/reference?hl=en#methods
+          // getValue(rowIndex, columnIndex)
+          document.getElementById("test").innerHTML = dataTable.getValue(18, 1);
+        }
+      </script>
+
 <style>
 body {
   font-family: Arial;
@@ -58,10 +84,17 @@ body {
         <h2 class="timer count-title count-number" id="time2"></h2>
         <p class="count-text ">Timestamp</p>
       </div>
+
+      <div class="counter col_fourth">
+        <img class="fa-2x" src="call.png" height="25"></img>
+        <h2 class="timer count-title count-number" id="test"></h2>
+        <p class="count-text ">Passengers</p>
+      </div>
   </div>
 </body>
 
 <script type="text/javascript">
+  // Get no of taxis and timestamp from LTA API
 	var temp_dash = function(){
 		$.getJSON('https://api.data.gov.sg/v1/transport/taxi-availability',function(data){
 			var taxi_num = data["features"][0]["properties"]["taxi_count"]
@@ -83,4 +116,5 @@ body {
     temp_dash()
     setInterval(temp_dash, 30000)
 </script>
+
 </html>
