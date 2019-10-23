@@ -23,8 +23,8 @@ Resource List
 	* jotform 	
 
 ## DEMO
-[https://koheiyamamoto.net/p2/](https://koheiyamamoto.net/p2/)
-[https://koheiyamamoto.net/sandbox/internetgis/project2/](https://koheiyamamoto.net/sandbox/internetgis/project2/)
+* [https://koheiyamamoto.net/p2/](https://koheiyamamoto.net/p2/) (shortened)
+* [https://koheiyamamoto.net/sandbox/internetgis/project2/](https://koheiyamamoto.net/sandbox/internetgis/project2/)
 
 ## DEMO VIDEO
 [https://youtu.be/KWsA1PM5aGg](https://youtu.be/KWsA1PM5aGg)
