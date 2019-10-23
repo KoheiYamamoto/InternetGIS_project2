@@ -23,4 +23,7 @@ Resource List
 	* jotform 	
 
 ## DEMO
-[https://youtu.be/VYvyflvORHE](https://youtu.be/VYvyflvORHE)
+[https://youtu.be/KWsA1PM5aGg](https://youtu.be/KWsA1PM5aGg)
+
+## PPT
+[Slide](./slide.pdf)

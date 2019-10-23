@@ -37,6 +37,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.7.1/leaflet-geocoder-mapzen.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-geocoder-mapzen/1.7.1/leaflet-geocoder-mapzen.js"></script>
 
+<!--noah-->
+  <script src="https://unpkg.com/esri-leaflet@2.3.1/dist/esri-leaflet.js"
+  integrity="sha512-Np+ry4Dro5siJ1HZ0hTwn2jsmu/hMNrYw1EIK9EjsEVbDge4AaQhjeTGRg2ispHg7ZgDMVrSDjNrzH/kAO9Law=="
+  crossorigin=""></script>
+  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.1/dist/esri-leaflet-geocoder.css"
+    integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="
+    crossorigin="">
+  <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.1/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-YUgyCwPXzSCFuYgNIsumhktAolzwxETPBwc+xAgJOW7B3/1r1EKf0WYpmNo+6a/9C/EAF9RxYnMynEmd+77fTA=="
+    crossorigin=""></script>
+
+
   <!-- Locate Control -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.60.0/L.Control.Locate.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-locatecontrol/0.60.0/L.Control.Locate.min.js"></script>
@@ -64,13 +76,25 @@
       scrollWheelZoom: false
     }).setView([41.76,-72.69], 11); // default center is overridden by Google Sheet options and points
 
+  var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+  var results = L.layerGroup().addTo(map);
+  searchControl.on('results', function (data) {
+    results.clearLayers();
+    for (var i = data.results.length - 1; i >= 0; i--) {
+      results.addLayer(L.marker(data.results[i].latlng));
+    }
+  });
+
+
+
+
     var geoJsonLayer;
     var temp = function() {
       // https://gis.stackexchange.com/questions/248252/haslayer-and-removelayer-methods-not-working-on-leaflet-map-as-expected/248274
       // Error handling whether a layer is alrady set or not
       if(map.hasLayer(geoJsonLayer)){
             map.removeLayer(geoJsonLayer);
-            console.log('the map have the layer')
+            console.log('the map has the layer')
       }else{
           console.log('the map does not have the layer')
       }

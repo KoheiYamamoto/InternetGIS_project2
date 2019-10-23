@@ -99,7 +99,6 @@ body {
 		$.getJSON('https://api.data.gov.sg/v1/transport/taxi-availability',function(data){
 			var taxi_num = data["features"][0]["properties"]["taxi_count"]
 			var time = data["features"][0]["properties"]["timestamp"]
-      var date = time.split("T", 1);
       var time2 =time.slice(11,19);
 
 			// var recorded_time = document.getElementById("time");
@@ -109,8 +108,7 @@ body {
       no_2.innerHTML = taxi_num;
       var timeShown = document.getElementById("time2");
 			timeShown.innerHTML = time2;
-      var dateShown = document.getElementById("date");
-			dateShown.innerHTML = date;
+
 	    })
 	}
     temp_dash()
